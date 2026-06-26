@@ -8,7 +8,7 @@ dotenv.config();
 
 const seedData = async () => {
   try {
-    const mongoUri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/inventory_forecasting';
+    const mongoUri = process.env.MONGO_URI;
     console.log(`Connecting to database for seeding: ${mongoUri}`);
     await mongoose.connect(mongoUri);
 
@@ -72,7 +72,7 @@ const seedData = async () => {
     console.log('Generating 90 days of daily sales records...');
     const salesDocs = [];
     const today = new Date();
-    
+
     // We want 90 days of history
     const historyDays = 90;
 
@@ -83,7 +83,7 @@ const seedData = async () => {
       let seasonalityFactor = 0;
 
       if (product.sku === 'ELEC-UBP15') {
-        baseSales = 3; 
+        baseSales = 3;
         trendSlope = 0.01; // upward trend
         seasonalityFactor = 1.2; // slight weekly seasonality
       } else if (product.sku === 'ELEC-AFSW') {
@@ -93,7 +93,7 @@ const seedData = async () => {
       } else if (product.sku === 'APPA-ECCH') {
         baseSales = 8;
         trendSlope = -0.01; // slightly downward trend
-        seasonalityFactor = 1.1; 
+        seasonalityFactor = 1.1;
       } else if (product.sku === 'HOME-HFSF') {
         baseSales = 4;
         trendSlope = 0.005; // steady
@@ -107,7 +107,7 @@ const seedData = async () => {
       for (let i = historyDays; i >= 1; i--) {
         const saleDate = new Date();
         saleDate.setDate(today.getDate() - i);
-        
+
         // Day of week: 0=Sunday, 6=Saturday
         const dayOfWeek = saleDate.getDay();
         const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
@@ -116,13 +116,13 @@ const seedData = async () => {
         // Day 90 is 90 days ago, day 1 is yesterday
         const dayIndex = historyDays - i;
         const trendVal = dayIndex * trendSlope;
-        
+
         // Multiplier for weekend
         const dayMultiplier = isWeekend ? seasonalityFactor : 0.85;
 
         // Add some random Gaussian-ish noise
         const noise = (Math.random() - 0.5) * (baseSales * 0.4);
-        
+
         let quantitySold = Math.round((baseSales + trendVal) * dayMultiplier + noise);
         quantitySold = Math.max(0, quantitySold); // No negative sales
 
@@ -140,7 +140,7 @@ const seedData = async () => {
     await Sale.insertMany(salesDocs);
     console.log(`Generated ${salesDocs.length} historical sales records.`);
     console.log('Database seeding successfully finished!');
-    
+
     await mongoose.disconnect();
     process.exit(0);
   } catch (error) {
