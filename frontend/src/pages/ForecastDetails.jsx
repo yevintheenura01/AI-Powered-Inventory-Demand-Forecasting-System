@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import useStore from '../store/useStore';
 import DemandChart from '../components/DemandChart';
-import { Calendar, TrendingUp, RefreshCw, Cpu, Award, Zap } from 'lucide-react';
+import { Calendar, RefreshCw, Cpu, Award, Zap } from 'lucide-react';
 
 const ForecastDetails = () => {
   const {

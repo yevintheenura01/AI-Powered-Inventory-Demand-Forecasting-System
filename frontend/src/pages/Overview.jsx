@@ -3,7 +3,7 @@ import useStore from '../store/useStore';
 import MetricCard from '../components/MetricCard';
 import StockAlerts from '../components/StockAlerts';
 import DemandChart from '../components/DemandChart';
-import { DollarSign, ShoppingCart, AlertTriangle, Layers, TrendingUp, RefreshCw } from 'lucide-react';
+import { DollarSign, ShoppingCart, AlertTriangle, Layers, RefreshCw } from 'lucide-react';
 
 const Overview = () => {
   const {
@@ -85,8 +85,6 @@ const Overview = () => {
           value={`${lowStockCount} items`}
           icon={<AlertTriangle size={20} />}
           subtext={`${criticalStockoutCount} critical stockouts`}
-          trend={lowStockCount > 0 ? `${lowStockCount}` : null}
-          isTrendUp={false}
         />
         <MetricCard
           title="Categories Managed"
