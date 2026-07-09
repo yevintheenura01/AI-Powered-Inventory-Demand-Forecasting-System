@@ -3,7 +3,7 @@ import useStore from '../store/useStore';
 import { Plus, Edit2, Trash2, ShoppingCart, X } from 'lucide-react';
 
 const Inventory = () => {
-  const { products, fetchProducts, addProduct, updateProduct, deleteProduct, loading, fetchSalesStats } = useStore();
+  const { products, fetchProducts, addProduct, updateProduct, deleteProduct, fetchSalesStats } = useStore();
 
   useEffect(() => {
     fetchProducts();

@@ -11,7 +11,7 @@ import {
   Area,
 } from 'recharts';
 
-const DemandChart = ({ history, forecast, productName }) => {
+const DemandChart = ({ history, forecast }) => {
   // Combine history and forecast into a single timeline for the chart
   const data = [];
 
